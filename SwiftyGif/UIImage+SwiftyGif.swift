@@ -30,6 +30,7 @@ let _displayRefreshFactorKey = malloc(4)
 let _imageCountKey = malloc(4)
 let _displayOrderKey = malloc(4)
 let _imageSizeKey = malloc(4)
+let _rawImageSizeKey = malloc(4)
 let _imageDataKey = malloc(4)
 
 let defaultLevelOfIntegrity: Float = 0.8
@@ -270,6 +271,7 @@ public extension UIImage{
         }
         let image = UIImage(cgImage:cgImage)
         self.imageSize = Int(image.size.height*image.size.width*4)*imageCount/1000000
+        self.rawImageSize = image.size
     }
     
     // MARK: get / set associated values
@@ -304,6 +306,16 @@ public extension UIImage{
             objc_setAssociatedObject(self, _imageSizeKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN);
         }
     }
+    
+    public var rawImageSize: CGSize? {
+        get {
+            return objc_getAssociatedObject(self, _rawImageSizeKey) as? CGSize
+        }
+        set {
+            objc_setAssociatedObject(self, _rawImageSizeKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN);
+        }
+    }
+
     
     public var imageCount: Int?{
         get {
